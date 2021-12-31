@@ -1,12 +1,14 @@
 ﻿@page "/fetchdata"
-@using Mc2.CrudTest.Domain
+@using Mc2.CrudTest.Common.DTOs
 @inject HttpClient _http
 
-<h1>Weather forecast</h1>
+<h1>Customer List</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>List of customers.</p>
 
-@if (_forecasts == null)
+
+
+@if (_customers == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -15,20 +17,20 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Birthdate</th>
+                <th>Phone Number</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (WeatherForecast forecast in _forecasts)
+            @foreach (var cus in _customers)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC.ToString()</td>
-                    <td>@forecast.TemperatureF.ToString()</td>
-                    <td>@forecast.Summary</td>
+                    <td>@cus.FirstName</td>
+                    <td>@cus.LastName</td>
+                    <td>@cus.BirthDate</td>
+                    <td>@cus.PhoneNumber</td>
                 </tr>
             }
         </tbody>
@@ -36,11 +38,11 @@ else
 }
 
 @code {
-    private WeatherForecast[] _forecasts;
+    private CustomerListItemDTO[] _customers;
 
     protected override async Task OnInitializedAsync()
     {
-        _forecasts = await _http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+        _customers = await _http.GetFromJsonAsync<CustomerListItemDTO[]>("api/Customer");
     }
 
 }

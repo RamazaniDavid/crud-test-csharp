@@ -1,3 +1,5 @@
+using Mc2.CrudTest.Framework.Infrastructure.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,9 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.ConfigureApplicationServices(Configuration);
+            services.AddMediatR(typeof(Startup).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +44,8 @@ namespace Mc2.CrudTest.Presentation.Server
                 app.UseHsts();
             }
 
+
+            app.ConfigureRequestPipeline();
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

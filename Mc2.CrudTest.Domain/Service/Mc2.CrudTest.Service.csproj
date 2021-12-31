@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="libphonenumber-csharp" Version="8.12.38" />
+    <PackageReference Include="Mapster" Version="4.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Mc2.CrudTest.Common.csproj" />
+    <ProjectReference Include="..\Core\Mc2.CrudTest.Core.csproj" />
+    <ProjectReference Include="..\Data\Mc2.CrudTest.Data.csproj" />
+  </ItemGroup>
+
+ 
+
+</Project>
