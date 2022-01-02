@@ -1,0 +1,74 @@
+﻿@page "/customerdialog/{CustomerId:int}"
+@using Mc2.CrudTest.Common.DTOs
+@inject HttpClient _http
+@inject Radzen.DialogService dialogService
+
+
+<RadzenCard>
+    <RadzenTemplateForm Visible="@(_customer != null)" TItem="CustomerListItemDTO" Data="@(_customer)" Submit="@(Submit)">
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenFieldset Text="Purchase Info">
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Firstname" />
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="FirstName" @bind-Value="_customer.FirstName"  />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="Lastname" />
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <RadzenTextBox style="width: 100%;" Name="LastName" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 align-items-center d-flex">
+                            <RadzenLabel Text="BirthDate" />
+                        </div>
+                        <div class="col-md-8">
+                            <RadzenDatePicker style="width: 100%;" Name="BirthDate" @bind-Value="_customer.BirthDate" />
+                        </div>
+                    </div>
+                    
+                </RadzenFieldset>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" Click="@Cancel" />
+            </div>
+        </div>
+    </RadzenTemplateForm>
+</RadzenCard>
+
+
+@code {
+    [Parameter] public int CustomerId { get; set; }
+    private CustomerListItemDTO _customer = new();
+
+
+    protected override async void OnInitialized()
+    {
+
+        _customer = CustomerId > 0 ? await _http.GetFromJsonAsync<CustomerListItemDTO>($"api/Customer/find/{CustomerId}") : new CustomerListItemDTO();
+        
+    }
+
+
+    void Submit(CustomerListItemDTO arg)
+    {
+        dialogService.Close(true);
+    }
+
+    void Cancel()
+    {
+        dialogService.Close(false);
+    }
+}
