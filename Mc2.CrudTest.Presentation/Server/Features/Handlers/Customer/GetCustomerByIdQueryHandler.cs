@@ -1,6 +1,6 @@
 ﻿
 using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Query;
-using Mc2.CrudTest.Service.Catalog;
+using Mc2.CrudTest.Service.Customers;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Mc2.CrudTest.Common.DTOs;
 
-namespace Mc2.CrudTest.Service.Catalog
+namespace Mc2.CrudTest.Service.Customers
 {
     public interface ICustomerService
     {

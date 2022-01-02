@@ -1,5 +1,5 @@
 ﻿using Mc2.CrudTest.Core.Infrastructure;
-using Mc2.CrudTest.Service.Catalog;
+using Mc2.CrudTest.Service.Customers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

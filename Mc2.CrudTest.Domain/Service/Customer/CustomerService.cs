@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Mc2.CrudTest.Common.DTOs;
 
-namespace Mc2.CrudTest.Service.Catalog
+namespace Mc2.CrudTest.Service.Customers
 {
     public class CustomerService : ICustomerService
     {
@@ -24,8 +24,6 @@ namespace Mc2.CrudTest.Service.Catalog
 
         public async Task<IEnumerable<CustomerListItemDTO>> getCustomersAsync()
         {
-
-
             return await _repositoryCustomer.TableNoTracking
           .Select(p => new CustomerListItemDTO
           {
@@ -59,6 +57,9 @@ namespace Mc2.CrudTest.Service.Catalog
 
         public async Task<CustomerDTO> RegisterCustomerAsync(CustomerDTO customerDTO)
         {
+            if (customerDTO == null)
+                throw new ArgumentNullException(nameof(customerDTO));
+
             var customer = customerDTO.ToEntity<Customer>();
             await _repositoryCustomer.InsertAsync(customer);
             customerDTO.ID = customer.ID;
@@ -74,6 +75,8 @@ namespace Mc2.CrudTest.Service.Catalog
 
         public async Task UpdateCustomerAsync(CustomerDTO customerDTO)
         {
+            if (customerDTO == null)
+                throw new ArgumentNullException(nameof(customerDTO));
 
             var customer = _repositoryCustomer.GetById(customerDTO.ID);
 
