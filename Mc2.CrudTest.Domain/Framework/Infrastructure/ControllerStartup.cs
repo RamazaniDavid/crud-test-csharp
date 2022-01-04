@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Mc2.CrudTest.Framework.Infrastructure.Filters;
 namespace Mc2.CrudTest.Framework.Infrastructure
 {
@@ -41,9 +38,9 @@ namespace Mc2.CrudTest.Framework.Infrastructure
             configController.ConfigureApiBehaviorOptions((option) =>
             {
                 option.ClientErrorMapping[404].Title = "Not Found";
-                option.InvalidModelStateResponseFactory = (Context) =>
+                option.InvalidModelStateResponseFactory = (context) =>
                 {
-                    var values = Context.ModelState.Values.Where(state => state.Errors.Count != 0)
+                    var values = context.ModelState.Values.Where(state => state.Errors.Count != 0)
                   .Select(state => state.Errors.Select(p => new { errorMessage = p.ErrorMessage }));
 
                     return new BadRequestObjectResult(values);

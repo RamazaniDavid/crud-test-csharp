@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mc2.CrudTest.Core.Tasks
+﻿namespace Mc2.CrudTest.Core.Tasks
 {
     public interface ITaskSchduler
     {

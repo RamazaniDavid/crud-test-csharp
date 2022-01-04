@@ -1,9 +1,6 @@
-﻿using Mc2.CrudTest.Core.Domian;
+﻿using Mc2.CrudTest.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mc2.CrudTest.Data.Mapping
 {

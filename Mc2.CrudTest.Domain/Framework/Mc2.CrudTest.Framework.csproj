@@ -13,7 +13,7 @@
   </ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Core\Mc2.CrudTest.Core.csproj" />
-	  <ProjectReference Include="..\Service\Mc2.CrudTest.Service.csproj" />
+	  <ProjectReference Include="..\Service\Mc2.CrudTest.DataTransferring.csproj" />
 	</ItemGroup>
 
 

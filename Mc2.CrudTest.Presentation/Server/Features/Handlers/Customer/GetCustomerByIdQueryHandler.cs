@@ -1,14 +1,13 @@
-﻿
-using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Query;
-using Mc2.CrudTest.Service.Customers;
-using MediatR;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Mc2.CrudTest.Common.DTOs;
+using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Query;
+using Mc2.CrudTest.Service.Services;
+using MediatR;
 
-namespace Mc2.CrudTest.Presentation.Server.Customer
+namespace Mc2.CrudTest.Presentation.Server.Features.Handlers.Customer
 {
-    public class GetCustomerByIdQueryHandler: IRequestHandler<GetCustomerByIdQuery, CustomerListItemDTO>
+    public class GetCustomerByIdQueryHandler: IRequestHandler<GetCustomerByIdQuery, CustomerListItemDto>
     {
         private readonly ICustomerService _customerService;
 
@@ -17,7 +16,7 @@ namespace Mc2.CrudTest.Presentation.Server.Customer
             _customerService = customerService;
         }
 
-        public async Task<CustomerListItemDTO> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
+        public async Task<CustomerListItemDto> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
 
             var model = await _customerService.GetCustomerByIdAsync(request.Id);

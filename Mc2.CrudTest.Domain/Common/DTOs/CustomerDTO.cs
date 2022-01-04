@@ -6,7 +6,7 @@ namespace Mc2.CrudTest.Common.DTOs
 {
 
 
-    public class CustomerDTO : BaseEntityDTO
+    public class CustomerDto : BaseEntityDto
     {
 
         public string FirstName { get; set; }
@@ -20,11 +20,11 @@ namespace Mc2.CrudTest.Common.DTOs
 
         [MobileNumberValidation]
         [NotMapped]
-        public PhoneNumberDTO PhoneNumberDto
+        public PhoneNumberDto PhoneNumberDto
         {
             get
             {
-                return new PhoneNumberDTO
+                return new PhoneNumberDto
                 {
                     CountryCode = CountryCode,
                     PhoneNumber = PhoneNumber,

@@ -2,7 +2,7 @@
 
 namespace Mc2.CrudTest.Common.DTOs
 {
-    public interface IDateDTO
+    public interface IDateDto
     {
           DateTime CreateOn { get; set; }
   

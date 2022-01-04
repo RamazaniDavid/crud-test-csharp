@@ -2,7 +2,7 @@
 {
 
 
-    public class CustomerListItemDTO : BaseEntityDTO
+    public class CustomerListItemDto : BaseEntityDto
     {
 
         public string FirstName { get; set; }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Mc2.CrudTest.Core.Domian
+namespace Mc2.CrudTest.Core.Domain
 {
     public class Customer : BaseEntity
     {

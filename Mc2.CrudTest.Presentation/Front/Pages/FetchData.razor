@@ -38,11 +38,11 @@ else
 }
 
 @code {
-    private CustomerListItemDTO[] _customers;
+    private CustomerListItemDto[] _customers;
 
     protected override async Task OnInitializedAsync()
     {
-        _customers = await _http.GetFromJsonAsync<CustomerListItemDTO[]>("api/Customer");
+        _customers = await _http.GetFromJsonAsync<CustomerListItemDto[]>("api/Customer");
     }
 
 }

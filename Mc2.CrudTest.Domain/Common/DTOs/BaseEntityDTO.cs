@@ -1,7 +1,7 @@
 ﻿namespace Mc2.CrudTest.Common.DTOs
 {
-    public class BaseEntityDTO:BaseDTO
+    public class BaseEntityDto:BaseDto
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
     }
 }

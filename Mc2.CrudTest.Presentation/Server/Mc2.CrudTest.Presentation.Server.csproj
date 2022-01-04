@@ -34,7 +34,7 @@
     <ProjectReference Include="..\..\Mc2.CrudTest.Domain\Core\Mc2.CrudTest.Core.csproj" />
     <ProjectReference Include="..\..\Mc2.CrudTest.Domain\Data\Mc2.CrudTest.Data.csproj" />
     <ProjectReference Include="..\..\Mc2.CrudTest.Domain\Framework\Mc2.CrudTest.Framework.csproj" />
-    <ProjectReference Include="..\..\Mc2.CrudTest.Domain\Service\Mc2.CrudTest.Service.csproj" />
+    <ProjectReference Include="..\..\Mc2.CrudTest.Domain\Service\Mc2.CrudTest.DataTransferring.csproj" />
     <ProjectReference Include="..\Front\Mc2.CrudTest.Presentation.Front.csproj" />
   </ItemGroup>
 

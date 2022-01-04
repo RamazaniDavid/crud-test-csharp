@@ -1,12 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace System
+namespace Mc2.CrudTest.Framework.Infrastructure
 {
     public class ErrorHandler : IErrorHandler
     {
@@ -32,12 +28,11 @@ namespace System
                 ErrorMessage = "Format Error";
                 StatusCode = 523;
             }
-            if (ex.GetType() == typeof(SqlException))
+            if (ex is SqlException exception)
             {
 
                 ErrorMessage = "DB Error";
-                SqlException exsql = ex as SqlException;
-                ErrorMessage = GetSqlServerError(exsql);
+                ErrorMessage = GetSqlServerError(exception);
             }
             if (ex.GetType() == typeof(DbUpdateConcurrencyException))
             {

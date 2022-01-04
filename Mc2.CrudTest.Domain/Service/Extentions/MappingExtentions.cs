@@ -1,42 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mc2.CrudTest.Core;
-using Mc2.CrudTest.Core.Domian;
-using Mapster;
+﻿using Mapster;
 using Mc2.CrudTest.Common.DTOs;
+using Mc2.CrudTest.Core;
+using Mc2.CrudTest.Core.Domain;
 
 namespace Mc2.CrudTest.Service.Extentions
 {
     public static class MappingExtentions
     {
-        public static TDTO TODTO<TDTO>(this Entity entity) where TDTO : BaseDTO
+        public static TDto ToDto<TDto>(this Entity entity) where TDto : BaseDto
         {
             if (entity == null)
                 return null;
 
-            var dto = entity.Adapt<TDTO>();
+            TDto dto = entity.Adapt<TDto>();
 
-            if (entity is Customer && dto is CustomerListItemDTO)
+            if (entity is Customer customer && dto is CustomerListItemDto)
             {
-                var customer = entity as Customer;
-                var customerDTO = dto as CustomerListItemDTO;
-                customerDTO.BirthDate = customer.DateOfBirth.ToShortDateString();
-                customerDTO.PhoneNumber =customer.CountryCode+"-"+ customer.PhoneNumber;
+                var customerDto = dto as CustomerListItemDto;
+                customerDto.BirthDate = customer.DateOfBirth.ToShortDateString();
+                customerDto.PhoneNumber =customer.CountryCode+"-"+ customer.PhoneNumber;
             }
             return dto;
         }
 
 
-        public static TEntity ToEntity<TEntity>(this BaseDTO baseDTO) where TEntity : Entity
+        public static TEntity ToEntity<TEntity>(this BaseDto baseDto) where TEntity : Entity
         {
 
             if (typeof(TEntity).GetInterface("IDateEntity") != null)
             {
-                TypeAdapterConfig<BaseDTO, TEntity>.NewConfig().Ignore("CreateOn", "UpdateOn", "LocalCreateOn", "LocalUpdateOn");
+                TypeAdapterConfig<BaseDto, TEntity>.NewConfig().Ignore("CreateOn", "UpdateOn", "LocalCreateOn", "LocalUpdateOn");
             }
-            var entity = baseDTO.Adapt<TEntity>();
+            var entity = baseDto.Adapt<TEntity>();
 
 
           

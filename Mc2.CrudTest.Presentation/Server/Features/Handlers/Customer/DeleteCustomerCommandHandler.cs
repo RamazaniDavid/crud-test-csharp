@@ -1,11 +1,10 @@
-﻿
-using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Command;
-using Mc2.CrudTest.Service.Customers;
-using MediatR;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Command;
+using Mc2.CrudTest.Service.Services;
+using MediatR;
 
-namespace Mc2.CrudTest.Presentation.Server.Customer
+namespace Mc2.CrudTest.Presentation.Server.Features.Handlers.Customer
 {
     public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
@@ -18,10 +17,10 @@ namespace Mc2.CrudTest.Presentation.Server.Customer
 
         public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _customerService.GetCustomerByIdAsync(request.ID);
+            var customer = await _customerService.GetCustomerByIdAsync(request.Id);
             if (customer != null)
             {
-                await _customerService.RemoveCustomerAsync(request.ID);
+                await _customerService.RemoveCustomerAsync(request.Id);
 
             }
 

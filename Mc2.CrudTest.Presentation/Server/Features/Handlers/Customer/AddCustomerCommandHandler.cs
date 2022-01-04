@@ -1,14 +1,13 @@
-﻿
-using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Command;
-using Mc2.CrudTest.Service.Customers;
-using MediatR;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Mc2.CrudTest.Common.DTOs;
+using Mc2.CrudTest.Presentation.Server.Features.Models.Customer.Command;
+using Mc2.CrudTest.Service.Services;
+using MediatR;
 
-namespace Mc2.CrudTest.Presentation.Server.Customer
+namespace Mc2.CrudTest.Presentation.Server.Features.Handlers.Customer
 {
-    public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, CustomerDTO>
+    public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, CustomerDto>
     {
         private readonly ICustomerService _customerService;
 
@@ -17,12 +16,10 @@ namespace Mc2.CrudTest.Presentation.Server.Customer
             _customerService = customerService;
         }
 
-        public async Task<CustomerDTO> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<CustomerDto> Handle(AddCustomerCommand request, CancellationToken cancellationToken)
         {
         
            var model= await _customerService.RegisterCustomerAsync(request.Model);
-
-
             return model;   
         }
     }

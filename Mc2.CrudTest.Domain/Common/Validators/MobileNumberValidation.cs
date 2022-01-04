@@ -12,7 +12,7 @@ namespace Mc2.CrudTest.Common.Validators
             if (value == null)
                 return new ValidationResult(ErrorMessage);
 
-            if (value is PhoneNumberDTO pn)
+            if (value is PhoneNumberDto pn)
             {
 
                 var phoneNumberUtil = PhoneNumbers.PhoneNumberUtil.GetInstance();

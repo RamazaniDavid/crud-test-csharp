@@ -47,14 +47,14 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> RegisterAsync([FromForm] CustomerDTO model)
+        public async Task<IActionResult> RegisterAsync([FromForm] CustomerDto model)
         {
-            if (model.ID != 0)
+            if (model.Id != 0)
                 return BadRequest();
 
             model = await _mediator.Send(new AddCustomerCommand() { Model = model });
 
-            return CreatedAtAction("find", new { id = model.ID }, model);
+            return CreatedAtAction("find", new { id = model.Id }, model);
 
         }
 
@@ -63,9 +63,9 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> UpdateAsync([FromForm] CustomerDTO model)
+        public async Task<IActionResult> UpdateAsync([FromForm] CustomerDto model)
         {
-            var customer = await _mediator.Send(new GetCustomerByIdQuery() { Id = model.ID });
+            var customer = await _mediator.Send(new GetCustomerByIdQuery() { Id = model.Id });
             if (customer == null)
                 return NotFound();
 
@@ -86,7 +86,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
             if (customer == null)
                 return NotFound();
 
-            await _mediator.Send(new DeleteCustomerCommand() { ID = id });
+            await _mediator.Send(new DeleteCustomerCommand() { Id = id });
 
             return Ok();
         }

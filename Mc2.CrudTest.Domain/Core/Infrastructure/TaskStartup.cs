@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Mc2.CrudTest.Core.Caching;
 using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
@@ -17,53 +14,36 @@ namespace Mc2.CrudTest.Core.Infrastructure
 
         public void Configure(IApplicationBuilder app)
         {
-
             app.UseHangfireDashboard("/task");
-            var options = new BackgroundJobServerOptions
+            BackgroundJobServerOptions options = new BackgroundJobServerOptions
             {
                 SchedulePollingInterval = TimeSpan.FromMilliseconds(1000)
             };
 
             app.UseHangfireServer(options);
-
         }
 
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<KestrelServerOptions>(options => { options.AllowSynchronousIO = true; });
+            services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
 
-            services.Configure<KestrelServerOptions>(options =>
-            {
-                options.AllowSynchronousIO = true;
-            });
-            services.Configure<IISServerOptions>(options =>
-            {
-
-                options.AllowSynchronousIO = true;
-            });
-
-            services.AddHangfire(configuration => configuration
-       .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
-       .UseSimpleAssemblyNameTypeSerializer()
-       .UseRecommendedSerializerSettings()
-.UseSqlServerStorage("Data Source=.;Initial Catalog=HangfireG2;Integrated Security=true;", new SqlServerStorageOptions
-{
-
-    CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
-    SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
-    QueuePollInterval = TimeSpan.Zero,
-    UseRecommendedIsolationLevel = true,
-    UsePageLocksOnDequeue = true,
-    DisableGlobalLocks = true,
-
-}));
+            services.AddHangfire(config => config
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UseSqlServerStorage("Data Source=.;Initial Catalog=HangfireG2;Integrated Security=true;",
+                    new SqlServerStorageOptions
+                    {
+                        CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                        SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                        QueuePollInterval = TimeSpan.Zero,
+                        UseRecommendedIsolationLevel = true,
+                        UsePageLocksOnDequeue = true,
+                        DisableGlobalLocks = true,
+                    }));
 
             services.AddHangfireServer();
-
-
-
-
         }
-
-
     }
 }

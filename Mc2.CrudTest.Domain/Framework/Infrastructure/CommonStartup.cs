@@ -6,15 +6,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mc2.CrudTest.Framework.Infrastructure
 {
     public class CommonStartup : IApplicationStartup
     {
         public MiddleWarePriority Priority => MiddleWarePriority.Normal;
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public void Configure(IApplicationBuilder app)
         {
@@ -25,14 +23,14 @@ namespace Mc2.CrudTest.Framework.Infrastructure
             }
             else
             {
-                app.UseExceptionHandler(app =>
+                app.UseExceptionHandler(x =>
                 {
-                    app.UseMiddleware<ErrorHandlerMiddleware>();
+                    x.UseMiddleware<ErrorHandlerMiddleware>();
                 });
                 app.UseHsts();
 
             }
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(_myAllowSpecificOrigins);
             app.UseSwagger();
             // app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApplication1 v1"));
             app.UseSwaggerUI(c =>
@@ -58,7 +56,7 @@ namespace Mc2.CrudTest.Framework.Infrastructure
 
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
+                options.AddPolicy(name: _myAllowSpecificOrigins,
                                   builder =>
                                   {
                                       builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();

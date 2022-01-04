@@ -2,7 +2,7 @@
 {
    
 
-    public class PhoneNumberDTO
+    public class PhoneNumberDto
     {
 
         public string CountryCode { get; set; }

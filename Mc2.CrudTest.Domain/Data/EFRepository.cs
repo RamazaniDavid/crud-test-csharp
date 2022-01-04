@@ -2,34 +2,34 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace Mc2.CrudTest.Data
 {
-    public class EFRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
+    public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
         #region Fields
-        private readonly IApplcationDbContext _context = null;
 
-        private DbSet<TEntity> entities;
+        private readonly IApplcationDbContext _context;
+
+        private DbSet<TEntity> _entities;
 
         protected virtual DbSet<TEntity> Entities
         {
             get
             {
-                if (entities == null)
-                    entities = this._context.Set<TEntity>();
+                if (_entities == null)
+                    _entities = _context.Set<TEntity>();
 
-                return entities;
+                return _entities;
             }
         }
 
         #endregion
-        public EFRepository(IApplcationDbContext context)
+        public EfRepository(IApplcationDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public IQueryable<TEntity> Table => Entities;
@@ -42,9 +42,9 @@ namespace Mc2.CrudTest.Data
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            this._context.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
 
-            this._context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public async virtual Task DeleteAsync(TEntity entity)
@@ -52,23 +52,23 @@ namespace Mc2.CrudTest.Data
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            this._context.Set<TEntity>().Remove(entity);
+            _context.Set<TEntity>().Remove(entity);
 
-            await this._context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
 
         public  virtual TEntity GetById(params object[] ids)
         {
-            return  this._context.Set<TEntity>().Find(ids);
+            return  _context.Set<TEntity>().Find(ids);
         }
         public  virtual TEntity GetByIdAsNoTracking(params object[] ids)
         {
-            var entity =  this._context.Set<TEntity>().Find(ids);
+            var entity =  _context.Set<TEntity>().Find(ids);
 
             if (entity != null)
             {
-                this._context.Entry(entity).State = EntityState.Detached;
+                _context.Entry(entity).State = EntityState.Detached;
             }
 
             return entity;
@@ -76,15 +76,15 @@ namespace Mc2.CrudTest.Data
 
         public async virtual Task<TEntity> GetByIdAsync(params object[] ids)
         {
-            return await this._context.Set<TEntity>().FindAsync(ids);
+            return await _context.Set<TEntity>().FindAsync(ids);
         }
         public async virtual Task<TEntity> GetByIdAsNoTrackingAsync(params object[] ids)
         {
-            var entity = await this._context.Set<TEntity>().FindAsync(ids);
+            var entity = await _context.Set<TEntity>().FindAsync(ids);
 
             if (entity != null)
             {
-                this._context.Entry(entity).State = EntityState.Detached;
+                _context.Entry(entity).State = EntityState.Detached;
             }
 
             return entity;
@@ -94,8 +94,8 @@ namespace Mc2.CrudTest.Data
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            this._context.Set<TEntity>().Add(entity);
-            this._context.SaveChanges();
+            _context.Set<TEntity>().Add(entity);
+            _context.SaveChanges();
         }
 
 
@@ -104,8 +104,8 @@ namespace Mc2.CrudTest.Data
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            await this._context.Set<TEntity>().AddAsync(entity);
-            await this._context.SaveChangesAsync();
+            await _context.Set<TEntity>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
         public virtual void Update(TEntity entity)
@@ -113,8 +113,8 @@ namespace Mc2.CrudTest.Data
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            this._context.Set<TEntity>().Update(entity);
-            this._context.SaveChanges();
+            _context.Set<TEntity>().Update(entity);
+            _context.SaveChanges();
         }
 
         public async virtual Task UpdateAsync(TEntity entity)
@@ -122,8 +122,8 @@ namespace Mc2.CrudTest.Data
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            this._context.Set<TEntity>().Update(entity);
-           await this._context.SaveChangesAsync();
+            _context.Set<TEntity>().Update(entity);
+           await _context.SaveChangesAsync();
         }
 
         public List<T> RunFunctionDb<T>(string functionName,List<DbParamter> paramters) where T : new()

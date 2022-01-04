@@ -2,7 +2,7 @@
 
 namespace Mc2.CrudTest.Common.DTOs
 {
-    public class BaseItemDTO : BaseEntityDTO, IDateDTO
+    public class BaseItemDto : BaseEntityDto, IDateDto
     {
         public DateTime CreateOn { get; set; }
         public DateTime UpdateOn { get; set; }

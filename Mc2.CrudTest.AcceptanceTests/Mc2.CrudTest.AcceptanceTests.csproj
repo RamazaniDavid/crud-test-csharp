@@ -18,7 +18,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mc2.CrudTest.Domain\Service\Mc2.CrudTest.Service.csproj" />
+    <ProjectReference Include="..\Mc2.CrudTest.Domain\Service\Mc2.CrudTest.DataTransferring.csproj" />
   </ItemGroup>
 
 </Project>

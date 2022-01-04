@@ -1,16 +1,13 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mc2.CrudTest.Core.Caching
 {
     public class RedisCacheManager : ICacheManager
     {
        
-        private readonly IDistributedCache _cache = null;
+        private readonly IDistributedCache _cache;
         public RedisCacheManager(IDistributedCache cache)
         {
             _cache = cache;

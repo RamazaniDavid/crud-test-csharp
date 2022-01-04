@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mc2.CrudTest.Framework.Infrastructure
@@ -19,7 +16,7 @@ namespace Mc2.CrudTest.Framework.Infrastructure
         {
             var exceptionHandler = httpContext.Features.Get<IExceptionHandlerFeature>();
 
-            handler.GetError(exceptionHandler.Error);
+            handler.GetError(exceptionHandler!.Error);
 
             httpContext.Response.StatusCode = handler.StatusCode;
             await httpContext.Response.WriteAsync( handler.ErrorMessage);

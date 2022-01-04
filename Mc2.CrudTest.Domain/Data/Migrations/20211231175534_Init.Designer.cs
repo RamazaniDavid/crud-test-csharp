@@ -26,11 +26,11 @@ namespace Mc2.CrudTest.Data.Migrations
 
             modelBuilder.Entity("Mc2.CrudTest.Core.Domian.Customer", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("BankAccountNumber")
                         .IsRequired()
@@ -71,7 +71,7 @@ namespace Mc2.CrudTest.Data.Migrations
                     b.Property<DateTime>("UpdateOn")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("Customer");
                 });

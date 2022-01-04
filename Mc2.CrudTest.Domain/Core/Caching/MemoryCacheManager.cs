@@ -1,13 +1,11 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mc2.CrudTest.Core.Caching
 {
     public class MemoryCacheManager : ICacheManager
     {
-        private readonly IMemoryCache _cache = null;
+        private readonly IMemoryCache _cache;
 
         public MemoryCacheManager(IMemoryCache cache)
         {

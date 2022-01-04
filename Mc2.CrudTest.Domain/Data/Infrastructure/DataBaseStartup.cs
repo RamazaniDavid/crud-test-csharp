@@ -3,9 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mc2.CrudTest.Data.Infrastructure
 {
@@ -21,7 +18,7 @@ namespace Mc2.CrudTest.Data.Infrastructure
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddDbContextPool<IApplcationDbContext, SqlServerApplicationContext>(
               c => c.UseSqlServer(configuration.GetConnectionString("CustomerDB")).UseLazyLoadingProxies()
           , poolSize: 16);

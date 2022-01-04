@@ -1,13 +1,11 @@
 ﻿using Mc2.CrudTest.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mc2.CrudTest.Data
 {
-    public partial interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : Entity
     {
 
         TEntity GetById(params object[] ids);
@@ -23,11 +21,11 @@ namespace Mc2.CrudTest.Data
         IQueryable<TEntity> TableNoTracking { get; }
 
         TEntity GetByIdAsNoTracking(params object[] ids);
-        System.Threading.Tasks.Task DeleteAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
-        System.Threading.Tasks.Task InsertAsync(TEntity entity);
-        System.Threading.Tasks.Task<TEntity> GetByIdAsync(params object[] ids);
-        System.Threading.Tasks.Task<TEntity> GetByIdAsNoTrackingAsync(params object[] ids);
+        Task InsertAsync(TEntity entity);
+        Task<TEntity> GetByIdAsync(params object[] ids);
+        Task<TEntity> GetByIdAsNoTrackingAsync(params object[] ids);
         List<T> RunFunctionDb<T>(string functionName, List<DbParamter> paramters) where T : new();
     }
 

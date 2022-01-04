@@ -1,11 +1,11 @@
 ﻿@page "/customerdialog/{CustomerId:int}"
 @using Mc2.CrudTest.Common.DTOs
 @inject HttpClient _http
-@inject Radzen.DialogService dialogService
+@inject DialogService _dialogService
 
 
 <RadzenCard>
-    <RadzenTemplateForm Visible="@(_customer != null)" TItem="CustomerListItemDTO" Data="@(_customer)" Submit="@(Submit)">
+    <RadzenTemplateForm Visible="@(_customer != null)" TItem="CustomerListItemDto" Data="@(_customer)" Submit="@(Submit)">
         <div class="row">
             <div class="col-md-12">
                 <RadzenFieldset Text="Purchase Info">
@@ -51,24 +51,24 @@
 
 @code {
     [Parameter] public int CustomerId { get; set; }
-    private CustomerListItemDTO _customer = new();
+    private CustomerListItemDto _customer = new();
 
 
     protected override async void OnInitialized()
     {
 
-        _customer = CustomerId > 0 ? await _http.GetFromJsonAsync<CustomerListItemDTO>($"api/Customer/find/{CustomerId}") : new CustomerListItemDTO();
+        _customer = CustomerId > 0 ? await _http.GetFromJsonAsync<CustomerListItemDto>($"api/Customer/find/{CustomerId}") : new CustomerListItemDto();
         
     }
 
 
-    void Submit(CustomerListItemDTO arg)
+    void Submit()
     {
-        dialogService.Close(true);
+        _dialogService.Close(true);
     }
 
     void Cancel()
     {
-        dialogService.Close(false);
+        _dialogService.Close(false);
     }
 }

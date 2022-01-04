@@ -13,7 +13,7 @@ namespace Mc2.CrudTest.Data.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
@@ -27,7 +27,7 @@ namespace Mc2.CrudTest.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.ID);
+                    table.PrimaryKey("PK_Customer", x => x.Id);
                 });
         }
 

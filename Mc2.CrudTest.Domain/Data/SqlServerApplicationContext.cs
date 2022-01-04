@@ -1,6 +1,4 @@
-﻿using Mc2.CrudTest.Core;
-using Mc2.CrudTest.Data.Mapping;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -10,7 +8,6 @@ using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Mc2.CrudTest.Data
 {
@@ -36,51 +33,49 @@ namespace Mc2.CrudTest.Data
             return base.Update(entity);
         }
 
-        public List<T> RunSp<T>(string StoreName, List<DbParamter> ListParamert) where T : new()
+        public List<T> RunSp<T>(string storeName, List<DbParamter> listParamert) where T : new()
         {
-            this.Database.OpenConnection();
-            DbCommand cmd = this.Database.GetDbConnection().CreateCommand();
-            cmd.CommandText = StoreName;
+            Database.OpenConnection();
+            DbCommand cmd = Database.GetDbConnection().CreateCommand();
+            cmd.CommandText = storeName;
             cmd.CommandType = CommandType.StoredProcedure;
 
-            foreach (var item in ListParamert)
+            foreach (var item in listParamert)
             {
                 cmd.Parameters.Add(new SqlParameter { ParameterName = item.ParametrName, Value = item.Value });
             }
 
 
             List<T> list = new List<T>();
-            using (var reader = cmd.ExecuteReader())
+            using DbDataReader reader = cmd.ExecuteReader();
+            if (reader is null && reader.HasRows)
             {
-                if (reader != null && reader.HasRows)
+                var entity = typeof(T);
+                var propDict = new Dictionary<string, PropertyInfo>();
+                var props = entity.GetProperties
+                    (BindingFlags.Instance | BindingFlags.Public);
+                propDict = props.ToDictionary(p => p.Name.ToUpper(), p => p);
+                while (reader.Read())
                 {
-                    var entity = typeof(T);
-                    var propDict = new Dictionary<string, PropertyInfo>();
-                    var props = entity.GetProperties
-           (BindingFlags.Instance | BindingFlags.Public);
-                    propDict = props.ToDictionary(p => p.Name.ToUpper(), p => p);
-                    while (reader.Read())
-                    {
-                        T newobject = new T();
+                    T newobject = new T();
 
-                        for (int index = 0; index < reader.FieldCount; index++)
+                    for (int index = 0; index < reader.FieldCount; index++)
+                    {
+                        if (propDict.ContainsKey(reader.GetName(index).ToUpper()))
                         {
-                            if (propDict.ContainsKey(reader.GetName(index).ToUpper()))
+                            var info = propDict[reader.GetName(index).ToUpper()];
+                            if ((info != null) && info.CanWrite)
                             {
-                                var info = propDict[reader.GetName(index).ToUpper()];
-                                if ((info != null) && info.CanWrite)
-                                {
-                                    var val = reader.GetValue(index);
-                                    info.SetValue(newobject, (val == DBNull.Value) ? null : val, null);
-                                }
+                                var val = reader.GetValue(index);
+                                info.SetValue(newobject, (val == DBNull.Value) ? null : val, null);
                             }
                         }
-                        list.Add(newobject);
                     }
+                    list.Add(newobject);
                 }
-                this.Database.CloseConnection();
-                return list;
             }
+            Database.CloseConnection();
+            return list;
         }
 
         public override int SaveChanges()
@@ -89,22 +84,20 @@ namespace Mc2.CrudTest.Data
             {
                 return base.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 CleanContext();
-                throw ex;
+                throw;
             }
         }
 
         private void CleanContext()
         {
-            if (this.ChangeTracker.HasChanges())
+            if (!ChangeTracker.HasChanges()) return;
+            List<EntityEntry> list = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified || p.State == EntityState.Added || p.State == EntityState.Deleted).ToList();
+            foreach (var item in list)
             {
-                var _list = this.ChangeTracker.Entries().Where(p => p.State == EntityState.Modified || p.State == EntityState.Added || p.State == EntityState.Deleted).ToList();
-                foreach (var item in _list)
-                {
-                    item.State = EntityState.Unchanged;
-                }
+                item.State = EntityState.Unchanged;
             }
         }
 

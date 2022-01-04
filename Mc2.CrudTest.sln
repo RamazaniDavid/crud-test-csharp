@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Data", "Mc2.Cr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Framework", "Mc2.CrudTest.Domain\Framework\Mc2.CrudTest.Framework.csproj", "{E5927F19-AFC6-48C1-9DD8-D65C5A0BB828}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Service", "Mc2.CrudTest.Domain\Service\Mc2.CrudTest.Service.csproj", "{C40E239A-E54D-4CC5-A2F4-FF7942763A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.DataTransferring", "Mc2.CrudTest.Domain\Service\Mc2.CrudTest.DataTransferring.csproj", "{C40E239A-E54D-4CC5-A2F4-FF7942763A5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mc2.CrudTest.Common", "Mc2.CrudTest.Domain\Common\Mc2.CrudTest.Common.csproj", "{40CA8AB3-EB27-4E11-89C8-E1D7C991C339}"
 EndProject

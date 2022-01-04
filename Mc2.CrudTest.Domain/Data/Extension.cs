@@ -1,11 +1,7 @@
 ﻿using Mc2.CrudTest.Core;
-using Mc2.CrudTest.Core.Extenstions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Mc2.CrudTest.Core.Extensions;
 
 namespace Mc2.CrudTest.Data
 {
@@ -15,19 +11,19 @@ namespace Mc2.CrudTest.Data
         public static void SetCreateOn(this ModelBuilder modelBuilder)
         {
 
-            var ListIDateEntityClasses = typeof(IDateEntity).GetAllClassNames();
+            var listIDateEntityClasses = typeof(IDateEntity).GetAllClassNames();
 
 
          
 
-            var ListEntityMaps = modelBuilder.Model.GetEntityTypes()
-                .Where(p=>ListIDateEntityClasses.Contains(p.ClrType.FullName));
+            var listEntityMaps = modelBuilder.Model.GetEntityTypes()
+                .Where(p=>listIDateEntityClasses.Contains(p.ClrType.FullName));
 
 
-            foreach (var EntityMap in ListEntityMaps)
+            foreach (var entityMap in listEntityMaps)
             {
 
-                var props = EntityMap.GetProperties().Where(p => p.ClrType == typeof(string));
+                var props = entityMap.GetProperties().Where(p => p.ClrType == typeof(string));
 
                 foreach (var item in props)
                 {
@@ -35,7 +31,7 @@ namespace Mc2.CrudTest.Data
                     item.SetColumnType("varchar");
                 }
 
-                var property = EntityMap.FindProperty("CreateOn");
+                var property = entityMap.FindProperty("CreateOn");
                 if (property != null)
                 {
                     property.ValueGenerated = Microsoft.EntityFrameworkCore.Metadata.ValueGenerated.OnAdd;
@@ -47,19 +43,19 @@ namespace Mc2.CrudTest.Data
         public static void SetVarchar(this ModelBuilder modelBuilder)
         {
 
-            var ListIDateEntityClasses = typeof(IDateEntity).GetAllClassNames();
+            var listIDateEntityClasses = typeof(IDateEntity).GetAllClassNames();
 
 
 
 
-            var ListEntityMaps = modelBuilder.Model.GetEntityTypes()
-                .Where(p => ListIDateEntityClasses.Contains(p.ClrType.FullName));
+            var listEntityMaps = modelBuilder.Model.GetEntityTypes()
+                .Where(p => listIDateEntityClasses.Contains(p.ClrType.FullName));
 
 
-            foreach (var EntityMap in ListEntityMaps)
+            foreach (var entityMap in listEntityMaps)
             {
 
-                var props = EntityMap.GetProperties().Where(p => p.ClrType == typeof(string));
+                var props = entityMap.GetProperties().Where(p => p.ClrType == typeof(string));
 
                 foreach (var item in props)
                 {

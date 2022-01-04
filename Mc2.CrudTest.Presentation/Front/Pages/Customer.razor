@@ -2,7 +2,7 @@
 @using Mc2.CrudTest.Common.DTOs
 @inject HttpClient _http
 
-@inject DialogService DialogService
+@inject DialogService _dialogService
 @implements IDisposable
 
 <h1>Customer List</h1>
@@ -18,19 +18,19 @@
 else
 {
     <RadzenDataGrid AllowFiltering="true" AllowColumnResize="true" FilterMode="FilterMode.Advanced" PageSize="5" AllowPaging="true" AllowSorting="true"
-                Data="@_customers" TItem="CustomerListItemDTO" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
+                Data="@_customers" TItem="CustomerListItemDto" ColumnWidth="300px" LogicalFilterOperator="LogicalFilterOperator.Or">
         <Columns>
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="Id" Filterable="false" Width="70px" TextAlign="TextAlign.Center" Visible="false" />
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="Id" Filterable="false" Width="70px" TextAlign="TextAlign.Center" Visible="false" />
             
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="FirstName" Title="First Name" Frozen="true" Width="140px" />
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="LastName" Title="Last Name" Frozen="true" Width="140px" />
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="BirthDate" Title="Birth Date" FormatString="{0:d}" Width="140px" />
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="PhoneNumber" Title="PhoneNumber" Width="200px" />
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="Email" Title="Email" Width="140px" />
-            <RadzenDataGridColumn TItem="CustomerListItemDTO" Property="BankAccountNumber" Title="Bank Account Number" Width="140px" />
-            <RadzenDataGridColumn Width="160px" TItem="CustomerListItemDTO" Property="OrderID" Filterable="false">
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="FirstName" Title="First Name" Frozen="true" Width="140px" />
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="LastName" Title="Last Name" Frozen="true" Width="140px" />
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="BirthDate" Title="Birth Date" FormatString="{0:d}" Width="140px" />
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="PhoneNumber" Title="PhoneNumber" Width="200px" />
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="Email" Title="Email" Width="140px" />
+            <RadzenDataGridColumn TItem="CustomerListItemDto" Property="BankAccountNumber" Title="Bank Account Number" Width="140px" />
+            <RadzenDataGridColumn Width="160px" TItem="CustomerListItemDto" Property="OrderID" Filterable="false">
                 <Template Context="data">
-                    <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Class="m-1" Click=@(() => EditCustomer(data.ID))  />
+                    <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Class="m-1" Click=@(() => EditCustomer(data.Id))  />
                 </Template>
             </RadzenDataGridColumn>
         </Columns>
@@ -38,29 +38,22 @@ else
 }
 
 @code {
-    private CustomerListItemDTO[] _customers;
+    private CustomerListItemDto[] _customers;
 
     protected override async Task OnInitializedAsync()
     {
-        _customers = await _http.GetFromJsonAsync<CustomerListItemDTO[]>("api/Customer");
+        _customers = await _http.GetFromJsonAsync<CustomerListItemDto[]>("api/Customer");
     }
 
-
-    async Task EditCustomer(int Id)
+    async Task EditCustomer(int id)
     {
-        await DialogService.OpenAsync<CustomerDialogPage>($"Edit Customer",
-            new Dictionary<string, object>() { { "CustomerId", Id } },
+        await _dialogService.OpenAsync<CustomerDialogPage>($"Edit Customer",
+            new Dictionary<string, object>() { { "CustomerId", id } },
             new DialogOptions() { Width = "700px", Height = "570px" });
     }
-
-    #region Implementation of IDisposable
-
     /// <inheritdoc />
     public void Dispose()
     {
         
     }
-
-    #endregion
-
 }

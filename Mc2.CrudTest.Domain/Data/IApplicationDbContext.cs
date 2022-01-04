@@ -1,9 +1,6 @@
-﻿using Mc2.CrudTest.Core;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +14,7 @@ namespace Mc2.CrudTest.Data
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         EntityEntry Entry(object entity);
-        List<T> RunSp<T>(string StoreName, List<DbParamter> ListParamert) where T : new();
+        List<T> RunSp<T>(string storeName, List<DbParamter> listParamert) where T : new();
     }
 
 }

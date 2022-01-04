@@ -1,25 +1,21 @@
-﻿
+﻿using System;
+using Mc2.CrudTest.Core.Domain;
 using Mc2.CrudTest.Data;
-using Mc2.CrudTest.Service.Customers;
+using Mc2.CrudTest.Service.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Mc2.CrudTest.AcceptanceTests.Customer.Service
+namespace Mc2.CrudTest.AcceptanceTests.ServiceTests
 {
     [TestClass()]
     public class CategoryServiceTests
     {
         private CustomerService _customerService;
-        private Mock<IRepository<Mc2.CrudTest.Core.Domian.Customer>> _customerRepositoryMock;
+        private Mock<IRepository<Customer>> _customerRepositoryMock;
         [TestInitialize()]
         public void Init()
         {
-            _customerRepositoryMock = new Mock<IRepository<Mc2.CrudTest.Core.Domian.Customer>>();
+            _customerRepositoryMock = new Mock<IRepository<Customer>>();
             _customerService = new CustomerService(_customerRepositoryMock.Object);
         }
         [TestMethod()]

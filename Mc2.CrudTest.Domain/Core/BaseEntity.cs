@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Mc2.CrudTest.Core
 {
     public abstract  class BaseEntity:Entity,IDateEntity
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public DateTime CreateOn { get; set; }
         public DateTime UpdateOn { get; set; }
     }

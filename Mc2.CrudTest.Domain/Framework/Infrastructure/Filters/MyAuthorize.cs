@@ -1,12 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Mc2.CrudTest.Framwork.Infrastructure.Filters
+namespace Mc2.CrudTest.Framework.Infrastructure.Filters
 {
     public class MyAutorizeAttribute : Attribute, IAsyncAuthorizationFilter
     {
@@ -29,18 +27,18 @@ namespace Mc2.CrudTest.Framwork.Infrastructure.Filters
             if (listroles.Count() == 0)
                 return Task.CompletedTask;
 
-            var Clientrole = context.HttpContext.User.Claims.Where(p => p.Type.Contains("role")).Select(p => p.Value).SingleOrDefault();
+            var clientrole = context.HttpContext.User.Claims.Where(p => p.Type.Contains("role")).Select(p => p.Value).SingleOrDefault();
 
 
-            if (string.IsNullOrEmpty(Clientrole))
+            if (string.IsNullOrEmpty(clientrole))
             {
                 context.Result = new StatusCodeResult(403);
             }
 
-            if (!string.IsNullOrEmpty(Clientrole))
+            if (!string.IsNullOrEmpty(clientrole))
             {
-                var Clientroles = Clientrole.Split(',');
-                if (!listroles.Any(role => Clientroles.Contains(role)))
+                var clientroles = clientrole.Split(',');
+                if (!listroles.Any(role => clientroles.Contains(role)))
                 {
                     context.Result = new StatusCodeResult(403);
                 }
